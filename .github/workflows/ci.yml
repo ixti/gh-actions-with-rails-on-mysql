@@ -1,0 +1,40 @@
+name: CI
+
+on: [push]
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_DATABASE: gh_actions_with_rails_on_mysql_test
+          MYSQL_USER: no-use
+          MYSQL_PASSWORD: for-a-name
+          MYSQL_ALLOW_EMPTY_PASSWORD: 1
+          MYSQL_ROOT_PASSWORD: ""
+        ports: ["3306:3306"]
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup test database
+        env:
+          MYSQL_USER: no-use
+          MYSQL_PASSWORD: for-a-name
+          MYSQL_HOST: localhost
+        run: bin/rails db:setup
+
+      - name: Run tests
+        env:
+          MYSQL_USER: no-use
+          MYSQL_PASSWORD: for-a-name
+          MYSQL_HOST: localhost
+        run: bin/bundle exec rspec
