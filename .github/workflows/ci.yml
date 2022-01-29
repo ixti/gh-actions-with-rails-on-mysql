@@ -29,12 +29,12 @@ jobs:
         env:
           MYSQL_USER: no-use
           MYSQL_PASSWORD: for-a-name
-          MYSQL_HOST: localhost
+          MYSQL_HOST: mysql # must match id of the service: jobs.{job_id}.services.{service_id}
         run: bin/rails db:setup
 
       - name: Run tests
         env:
           MYSQL_USER: no-use
           MYSQL_PASSWORD: for-a-name
-          MYSQL_HOST: localhost
+          MYSQL_HOST: mysql
         run: bin/bundle exec rspec
