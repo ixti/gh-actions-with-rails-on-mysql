@@ -15,7 +15,9 @@ jobs:
           MYSQL_PASSWORD: for-a-name
           MYSQL_ALLOW_EMPTY_PASSWORD: 1
           MYSQL_ROOT_PASSWORD: ""
-        ports: ["3306:3306"]
+        ports:
+          - "3306:3306"
+        options: --health-cmd="mysql -e 'SELECT 1' >/dev/null" --health-interval=10s --health-timeout=10s --health-retries=10
 
     steps:
 
