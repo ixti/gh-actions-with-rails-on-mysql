@@ -6,6 +6,9 @@ jobs:
   rspec:
     runs-on: ubuntu-latest
 
+    container:
+      image: ruby:2.7.5
+
     services:
       mysql:
         image: mysql:8
